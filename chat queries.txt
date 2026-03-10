@@ -1,0 +1,170 @@
+Analysis paused
+
+Good 👍 I opened your file and extracted all the queries exactly as they are.
+You can execute them directly in SQL Developer (Run Script F5).
+
+I did NOT change anything.
+
+1️⃣ SEQUENCE
+CREATE SEQUENCE  "PF_USER"."R_BILL_ONE_SEQ"
+MINVALUE 1
+MAXVALUE 9999999999999999999999999999
+INCREMENT BY 1
+START WITH 1000
+NOCACHE
+NOORDER
+NOCYCLE
+NOKEEP
+NOSCALE
+GLOBAL;
+2️⃣ TABLE : DRDL_PERSONNEL
+CREATE TABLE "PF_USER"."DRDL_PERSONNEL"
+(
+"PERSNO" NUMBER(10,0),
+"NAME" VARCHAR2(50 BYTE),
+"DESIG" VARCHAR2(40 BYTE),
+"DIVISION" VARCHAR2(40 BYTE),
+"DEPARTMENT" VARCHAR2(40 BYTE),
+"IDNO" NUMBER(10,0),
+"STATUS" VARCHAR2(15 BYTE),
+"F_CDES_TYPE" VARCHAR2(30 BYTE),
+"BANK_NAME" VARCHAR2(40 BYTE),
+"BANK_ACCNO" VARCHAR2(20 BYTE),
+"BANK_BRANCH" VARCHAR2(40 BYTE),
+"IFSCNEFTCODE" VARCHAR2(11 BYTE),
+"MICRNO" VARCHAR2(9 BYTE),
+"ADDRESS1" VARCHAR2(50 BYTE),
+"CITY" VARCHAR2(30 BYTE),
+"DISTRICT" VARCHAR2(30 BYTE),
+"STATE" VARCHAR2(30 BYTE),
+"PINNO" VARCHAR2(6 BYTE),
+"ADDRESS2" VARCHAR2(50 BYTE),
+"PANNO" VARCHAR2(10 BYTE)
+);
+3️⃣ TABLE : OTHER_PERSONNEL
+CREATE TABLE "PF_USER"."OTHER_PERSONNEL"
+(
+"PERSNO" NUMBER(10,0),
+"NAME" VARCHAR2(50 BYTE),
+"DESIG" VARCHAR2(40 BYTE),
+"DIVISION" VARCHAR2(40 BYTE),
+"DEPARTMENT" VARCHAR2(40 BYTE),
+"IDNO" NUMBER(10,0),
+"STATUS" VARCHAR2(15 BYTE),
+"F_CDES_TYPE" VARCHAR2(30 BYTE),
+"BANK_NAME" VARCHAR2(40 BYTE),
+"BANK_ACCNO" VARCHAR2(20 BYTE),
+"BANK_BRANCH" VARCHAR2(40 BYTE),
+"IFSCNEFTCODE" VARCHAR2(11 BYTE),
+"MICRNO" VARCHAR2(9 BYTE),
+"ADDRESS1" VARCHAR2(50 BYTE),
+"CITY" VARCHAR2(30 BYTE),
+"DISTRICT" VARCHAR2(30 BYTE),
+"STATE" VARCHAR2(30 BYTE),
+"PINNO" VARCHAR2(6 BYTE),
+"ADDRESS2" VARCHAR2(50 BYTE),
+"PANNO" VARCHAR2(10 BYTE)
+);
+4️⃣ TABLE : PF_LOGIN
+CREATE TABLE "PF_USER"."PF_LOGIN"
+(
+"USERNAME" VARCHAR2(15 BYTE),
+"PASSWORD1" VARCHAR2(15 BYTE)
+);
+5️⃣ TABLE : PURPOSE
+CREATE TABLE "PF_USER"."PURPOSE"
+(
+"SNO" NUMBER(3,0),
+"PURPOSE" VARCHAR2(50 BYTE),
+"TYPE" VARCHAR2(5 BYTE)
+);
+6️⃣ TABLE : RECEIPTS_ONE
+CREATE TABLE "PF_USER"."RECEIPTS_ONE"
+(
+"CONTNO" NUMBER(9,0),
+"DVNO_REFNO" VARCHAR2(25 BYTE),
+"RVNO" NUMBER(10,0),
+"CHEQUE_RECEIPT_NO" NUMBER(15,0),
+"AMOUNT" NUMBER(11,2),
+"TRCD" VARCHAR2(2 BYTE),
+"TRCD_DESC" VARCHAR2(30 BYTE),
+"REMARKS" VARCHAR2(50 BYTE),
+"BALANCE" NUMBER(11,2),
+"TR_DATE" DATE,
+"CHEQUE_RECEIPT_DATE" DATE,
+"R_PURPOSE" VARCHAR2(50 BYTE),
+"CHEQUE_CASH" VARCHAR2(2 BYTE),
+"FROM_ADDRESS" VARCHAR2(100 BYTE),
+"R_TYPE" VARCHAR2(5 BYTE),
+"ALERTFLAG" VARCHAR2(1 BYTE),
+"REC_NO" VARCHAR2(11 BYTE),
+"BANK_CREDIT_DATE" DATE
+);
+7️⃣ TABLE : R_BILL_ONE
+CREATE TABLE "PF_USER"."R_BILL_ONE"
+(
+"CONTNO" NUMBER(9,0),
+"BILLNO" VARCHAR2(10 BYTE),
+"BILLDATE" DATE,
+"TYPE" VARCHAR2(5 BYTE),
+"PURPOSE" VARCHAR2(50 BYTE),
+"BILLAMOUNT" NUMBER(11,2),
+"BALANCE" NUMBER(11,2),
+"RVNO" NUMBER(10,0),
+"ALERTFLAG" VARCHAR2(1 BYTE)
+);
+8️⃣ TABLE : R_DETAILS
+CREATE TABLE "PF_USER"."R_DETAILS"
+(
+"RVNO" NUMBER(10,0),
+"PERSNO" VARCHAR2(50 BYTE),
+"AMOUNT" NUMBER(11,2),
+"SNO" NUMBER(3,0),
+"BALANCE" NUMBER(11,2),
+"ALERTFLAG" VARCHAR2(1 BYTE),
+"CASHBOOK_AMOUNT" NUMBER(11,2),
+"TAXFLAG" NUMBER
+);
+9️⃣ TABLE : TRCD
+CREATE TABLE "PF_USER"."TRCD"
+(
+"TRCD" VARCHAR2(2 BYTE),
+"DESCRIPTION" VARCHAR2(50 BYTE)
+);
+🔟 INSERT DATA
+DRDL_PERSONNEL
+Insert into PF_USER.DRDL_PERSONNEL values (2001,'ANIL KUMAR',null,null,null,201,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.DRDL_PERSONNEL values (2002,'DIVYA SINGH',null,null,null,202,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.DRDL_PERSONNEL values (2003,'VIKRAM NAIDU',null,null,null,203,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.DRDL_PERSONNEL values (2004,'MEENA IYER',null,null,null,204,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.DRDL_PERSONNEL values (2005,'ROHIT VERMA',null,null,null,205,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+OTHER_PERSONNEL
+Insert into PF_USER.OTHER_PERSONNEL values (1001,'RAVI KUMAR',null,null,null,101,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.OTHER_PERSONNEL values (1002,'SNEHA REDDY',null,null,null,102,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.OTHER_PERSONNEL values (1003,'ARJUN RAO',null,null,null,103,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.OTHER_PERSONNEL values (1004,'PRIYA SHARMA',null,null,null,104,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+Insert into PF_USER.OTHER_PERSONNEL values (1005,'KARTHIK DAS',null,null,null,105,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+LOGIN
+Insert into PF_USER.PF_LOGIN values ('DRDLPF','password');
+PURPOSE
+Insert into PF_USER.PURPOSE values (1,'p1','t1');
+Insert into PF_USER.PURPOSE values (2,'p2','t1');
+Insert into PF_USER.PURPOSE values (3,'p3','t1');
+Insert into PF_USER.PURPOSE values (4,'p4','t1');
+Insert into PF_USER.PURPOSE values (5,'m1','t2');
+Insert into PF_USER.PURPOSE values (6,'m2','t2');
+Insert into PF_USER.PURPOSE values (7,'m3','t2');
+Insert into PF_USER.PURPOSE values (8,'m4','t2');
+Insert into PF_USER.PURPOSE values (9,'n1','t3');
+Insert into PF_USER.PURPOSE values (10,'n2','t3');
+Insert into PF_USER.PURPOSE values (11,'n3','t3');
+Insert into PF_USER.PURPOSE values (12,'n4','t3');
+Insert into PF_USER.PURPOSE values (13,'s1','t4');
+Insert into PF_USER.PURPOSE values (14,'s2','t4');
+Insert into PF_USER.PURPOSE values (15,'s3','t4');
+Insert into PF_USER.PURPOSE values (16,'s4','t4');
+Final Step
+
+Run:
+
+COMMIT;
