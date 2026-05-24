@@ -1,0 +1,133 @@
+/* PAGE BACKGROUND — match CDA receipt */
+.page-bg {
+  background: #c7d5e3;   /* Light blue background */
+  min-height: 100vh;
+  padding: 40px;
+}
+
+/* CARD CONTAINER */
+.form-card {
+  background: #ffffff;   /* White card like receipt */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  max-width: 1300px;
+  margin: auto;
+  position: relative;
+}
+
+/* MENU — EXACT TOP RIGHT (unchanged alignment) */
+.menu-container {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+}
+
+.menu-btn {
+  padding: 6px 18px;
+  border: 1px solid #1e63d6;   /* Receipt blue */
+  background: #ffffff;
+  color: #1e63d6;              /* Receipt blue */
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.menu-btn:hover {
+  background: #1e63d6;
+  color: white;
+}
+
+/* HEADINGS */
+.main-title {
+  text-align: center;
+  color: #1e63d6;   /* Exact receipt blue */
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.sub-title {
+  text-align: center;
+  color: #1e63d6;   /* Same blue */
+  margin-bottom: 40px;
+}
+
+/* ROW STRUCTURE (UNCHANGED) */
+.row {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #2c3e50;   /* Slight dark grey like receipt */
+}
+
+/* INPUT STYLE */
+input,
+select {
+  padding: 8px;
+  border: 1px solid #cfd8dc;   /* Receipt style border */
+  border-radius: 5px;
+  background: white;
+}
+
+input:focus,
+select:focus {
+  border-color: #1e63d6;       /* Blue focus */
+  outline: none;
+}
+
+/* GAP BETWEEN GROUPS */
+.row-gap {
+  height: 30px;
+}
+
+/* SAVE BUTTON — FULL WIDTH (alignment unchanged) */
+.save-container {
+  margin-top: 25px;
+}
+
+.save-btn {
+  display: flex;
+  justify-content: center;   /* centers horizontally */
+  margin-top: 20px;
+
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #1e63d6, #3a86ff); /* Exact receipt gradient */
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  opacity: 0.95;
+}
+
+/* ADD ANOTHER RECEIPT */
+.add-container {
+  margin-top: 15px;
+}
+
+.add-btn {
+  padding: 6px 14px;
+  background:linear-gradient(to right, #1e63d6, #3a86ff);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background: #eaf2ff;
+}

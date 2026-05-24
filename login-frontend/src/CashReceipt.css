@@ -1,0 +1,86 @@
+.cash-page {
+    min-height: 100vh;
+    background-color: #dfeaf5;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+}
+
+.main-title {
+    text-align: center;
+    color: #0066ff;
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sub-title {
+    text-align: center;
+    color: #0066ff;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.cash-container {
+    width: 85%;
+    background: white;
+    margin: auto;
+
+    padding: 40px;
+    border-radius: 20px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #003c99;
+    margin-bottom: 12px;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 16px;
+    border-radius: 10px;
+    border: 2px solid #8dbfff;
+    font-size: 18px;
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.save-btn {
+  width: 210px;
+  height: 46px;
+
+  background-color: #0d6efd;
+  color: white;
+
+  border: none;
+  border-radius: 14px;
+
+  font-size: 22px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 35px auto;
+}
+
+.save-btn:hover {
+    background: #0051cc;
+}

@@ -21,8 +21,15 @@ export default function Receipts() {
           From CDA, Hyderabad
         </p>
 
-        <p style={styles.link}>From PCDA, DELHI</p>
-        <p style={styles.link}>Cash</p>
+        <p style={styles.link}
+        onClick={() => navigate("/pcda-receipt")}
+        >From PCDA, DELHI</p>
+       <p
+  style={styles.link}
+  onClick={() => navigate("/cash")}
+>
+  Cash
+</p>
         <p style={styles.link}>Withdrawal</p>
         <p style={styles.link}>Cheque / DD</p>
         <p style={styles.link}>Direct From SBI</p>

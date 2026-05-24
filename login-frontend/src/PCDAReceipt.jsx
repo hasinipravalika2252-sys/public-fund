@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function CDAReceipt() {
+export default function PCDAReceipt() {
   const navigate = useNavigate();
 
   const now = new Date();
@@ -35,7 +35,7 @@ export default function CDAReceipt() {
     e.preventDefault();
     let newErrors = {};
 
-    if (!userDvPart) newErrors.dv = "Please enter CDA DV number";
+    if (!userDvPart) newErrors.dv = "Please enter PCDA DV number";
     if (!chequeNo) newErrors.chequeNo = "Please enter cheque number";
     if (!chequeDate) newErrors.chequeDate = "Please select cheque date";
     if (!amount) newErrors.amount = "Please enter amount";
@@ -56,7 +56,7 @@ export default function CDAReceipt() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/receipts/cda",
+        "http://localhost:8080/api/receipts/pcda",
         {
           method: "POST",
           headers: {
@@ -72,7 +72,7 @@ export default function CDAReceipt() {
       }
 
       alert("Receipt saved successfully ");
-      navigate("/bills");
+      navigate("/pcdabills");
 
     } catch (error) {
       console.error(error);
@@ -83,14 +83,14 @@ export default function CDAReceipt() {
   return (
     <div style={styles.page}>
       <h1 style={styles.heading}>PUBLIC FUND</h1>
-      <h2 style={styles.subheading}>RECEIPT FROM CDA</h2>
+      <h2 style={styles.subheading}>RECEIPT FROM PCDA</h2>
 
       <button style={styles.menuButton} onClick={() => navigate("/receipts")}>
         MENU
       </button>
 
       <form style={styles.form} onSubmit={handleSubmit}>
-        <label style={styles.label}>CDA DV NO :</label>
+        <label style={styles.label}>PCDA DV NO :</label>
         <div style={styles.dvContainer}>
           <input style={styles.dvDate} value={year} readOnly />
           <input style={styles.dvDate} value={month} readOnly />
@@ -111,7 +111,7 @@ export default function CDAReceipt() {
         </div>
         {errors.dv && <p style={styles.error}>{errors.dv}</p>}
 
-        <label style={styles.label}>CDA CHEQUE NO :</label>
+        <label style={styles.label}>PCDA CHEQUE NO :</label>
         <input
           style={styles.input}
           value={chequeNo}
@@ -123,7 +123,7 @@ export default function CDAReceipt() {
         />
         {errors.chequeNo && <p style={styles.error}>{errors.chequeNo}</p>}
 
-        <label style={styles.label}>CDA CHEQUE DATE :</label>
+        <label style={styles.label}>PCDA CHEQUE DATE :</label>
         <input
           type="date"
           style={styles.input}
