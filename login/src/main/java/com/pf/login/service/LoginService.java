@@ -14,24 +14,24 @@ public class LoginService {
     public LoginService(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
-public String authenticate(String username, String password, String role) {
+public String authenticate(String username, String password) {
 
     Optional<Login> userOpt = loginRepository.findByUsername(username);
 
     boolean usernameOk = false;
     boolean passwordOk = false;
-    boolean roleOk = false;
+   
 
     if (userOpt.isPresent()) {
         usernameOk = true;
 
         Login user = userOpt.get();
         passwordOk = user.getPassword().equals(password);
-        roleOk = user.getRole().equals(role);
+        
     }
 
     // ✅ All correct
-    if (usernameOk && passwordOk && roleOk) {
+    if (usernameOk && passwordOk ) {
         return "Login successful";
     }
 
@@ -44,9 +44,7 @@ public String authenticate(String username, String password, String role) {
     if (!passwordOk) {
         error.append("password, ");
     }
-    if (!roleOk) {
-        error.append("role, ");
-    }
+    
 
     // remove last comma and space
     error.setLength(error.length() - 2);

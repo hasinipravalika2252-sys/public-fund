@@ -13,8 +13,7 @@ public class Login {
     @Column(name = "PASSWORD1")
     private String password;
 
-    @Column(name = "ROLE")
-    private String role;
+   
 
     // getters and setters
 
@@ -34,11 +33,5 @@ public class Login {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+    
 }

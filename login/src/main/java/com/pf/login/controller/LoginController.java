@@ -18,8 +18,8 @@ public class LoginController {
     public String login(@RequestBody Login login) {
         return loginService.authenticate(
                 login.getUsername(),
-                login.getPassword(),
-                login.getRole()
+                login.getPassword()
+        
         );
     }
 }
