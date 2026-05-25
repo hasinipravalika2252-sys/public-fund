@@ -39,55 +39,78 @@ public class BillService {
             existingTotal = BigDecimal.ZERO;
         }
 
-        // 3️⃣ Validate
+        // 3️⃣ Duplicate check (Bill No + Bill Date)
+        boolean exists = billRepository.existsByBillNoAndBillDate(
+                billRequest.getBillNo(),
+                billRequest.getBillDate()
+        );
+
+        if (exists) {
+            throw new RuntimeException("Bill No + Bill Date combination should not repeat");
+        }
+
+        // 4️⃣ Validate amount
         BigDecimal newTotal = existingTotal.add(billRequest.getBillAmount());
 
         if (newTotal.compareTo(receiptAmount) > 0) {
             throw new RuntimeException("TOTAL AMOUNT EXCEEDS BILL AMOUNT");
         }
 
-        // 4️⃣ Generate RVNO
-        String prefix = LocalDate.now()
+        // 5️⃣ Generate RVNO
+        String rvPrefix = LocalDate.now()
                 .format(DateTimeFormatter.ofPattern("yyyyMM"));
 
-        Long start = Long.parseLong(prefix + "0000");
-        Long end   = Long.parseLong(prefix + "9999");
+        Long rvStart = Long.parseLong(rvPrefix + "0000");
+        Long rvEnd   = Long.parseLong(rvPrefix + "9999");
 
-        Long maxRvno = billRepository.findMaxRvnoInRange(start, end);
+        Long maxRvno = billRepository.findMaxRvnoInRange(rvStart, rvEnd);
 
         Long newRvno;
 
         if (maxRvno == null) {
-            newRvno = Long.parseLong(prefix + "0001");
+            newRvno = Long.parseLong(rvPrefix + "0001");
         } else {
             newRvno = maxRvno + 1;
         }
-        // DUPLICATE CHECK
-Long duplicateCount = billRepository.checkDuplicateBill(
-        latestContno,
-        billRequest.getBillNo(),
-        billRequest.getBillDate()
-);
 
-if (duplicateCount > 0) {
-    throw new RuntimeException(
-            "SAME CONTNO + BILL NO + BILL DATE ALREADY EXISTS");
-}
+        // 6️⃣ Generate CONTNO
+        String contPrefix = String.valueOf(LocalDate.now().getYear());
 
-        // 5️⃣ Set values
-        billRequest.setContno(latestContno);
+        Long contStart = Long.parseLong(contPrefix + "00000");
+        Long contEnd   = Long.parseLong(contPrefix + "99999");
+
+        Long maxContno = billRepository.findMaxContnoInRange(contStart, contEnd);
+
+        Long newContno;
+
+        if (maxContno == null) {
+            newContno = Long.parseLong(contPrefix + "00001");
+        } else {
+            newContno = maxContno + 1;
+        }
+
+        // 7️⃣ Set values
+        billRequest.setContno(newContno);
+
         billRequest.setRvno(newRvno);
+
+        billRequest.setType("MIS");
+
         billRequest.setBalance(billRequest.getBillAmount());
+
         billRequest.setAlertFlag("N");
 
-        // 6️⃣ Save
+        if (billRequest.getBillDate() == null) {
+            billRequest.setBillDate(LocalDate.now());
+        }
+
+        // 8️⃣ Save
         billRepository.save(billRequest);
 
         return newRvno;
     }
 
-
-    // 🔹 NEW METHOD (added only for fetching latest bill)
+    // 🔹 Fetch latest bill using MAX(RVNO)
     public RBillOne getLatestBill() {
         return billRepository.findLatestBill();
     }

@@ -24,7 +24,7 @@ public class RDetailsService {
         int taxFlag = request.getTaxflag();
 
         // -------------------------
-        // CASE 1 : TAX = NILL
+        // CASE 1 : TAX = NIL
         // -------------------------
         if (taxFlag == 0) {
 
