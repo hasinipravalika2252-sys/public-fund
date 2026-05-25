@@ -131,3 +131,47 @@ select:focus {
 .add-btn:hover {
   background: #eaf2ff;
 }
+.receipt-box {
+  border: 2px solid black;   /* changed from #ccc to black */
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+.receipt-title {
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;   /* added this line */
+}
+
+.inline-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.label {
+  font-weight: bold;
+  color: red;
+}
+
+.value {
+  color: black;
+}
+.bill-row input,
+.bill-row select {
+  width: 60%;
+  padding: 5px;
+  font-size: 14px;
+}
+.bill-title {
+  text-align: center;
+  font-weight: bold;
+  margin: 20px 0 15px 0;
+  color: #333;
+}
+.small-col {
+  width: 160px;
+}
+

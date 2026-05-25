@@ -22,7 +22,6 @@ export default function Bills() {
   const [types, setTypes] = useState([]);
   const [purposes, setPurposes] = useState([]);
 
-  // Fetch latest receipt
   useEffect(() => {
     fetch("http://localhost:8080/api/receipts/latest")
       .then((res) => res.json())
@@ -42,7 +41,6 @@ export default function Bills() {
       );
   }, []);
 
-  // Fetch types
   useEffect(() => {
     fetch("http://localhost:8080/api/purpose/types")
       .then((res) => res.json())
@@ -60,7 +58,7 @@ export default function Bills() {
 
     if (name === "billAmount") {
       if (!/^\d*$/.test(value)) return;
-      if (value.length > 10) return; // ✅ ADDED THIS LINE (10 digit limit)
+      if (value.length > 10) return;
     }
 
     if (name === "type") {
@@ -76,7 +74,6 @@ export default function Bills() {
     setFormData({ ...formData, [name]: value });
   };
 
-  // 🔹 Common validation
   const validateForm = () => {
     let missingFields = [];
 
@@ -94,86 +91,76 @@ export default function Bills() {
     return true;
   };
 
-  // 🔹 Common save function
   const saveBillToBackend = async () => {
-    const response = await fetch("http://localhost:8080/api/bill/save", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        contno: Number(formData.recNo),
-        billNo: formData.billNo,
-        billDate: formData.billDate,
-        type: formData.type,
-        purpose: formData.purpose,
-        billAmount: Number(formData.billAmount),
-      }),
-    });
+  const response = await fetch("http://localhost:8080/api/bill/save", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      contno: Number(formData.recNo),
+      billNo: formData.billNo,
+      billDate: formData.billDate,
+      type: formData.type,
+      purpose: formData.purpose,
+      billAmount: Number(formData.billAmount),
+    }),
+  });
 
-    const message = await response.text();
+  const message = await response.text();
 
-    if (!response.ok) {
-      alert(message || "TOTAL AMOUNT EXCEEDS BILL AMOUNT");
-      return null;
-    }
+  // ✅ Custom alert based on response
+  if (!response.ok) {
 
-    return message;
-  };
+  // 🔥 CUSTOM MESSAGE 1
+  if (message.includes("TOTAL AMOUNT EXCEEDS BILL AMOUNT")) {
+    alert("Bill amount exceeds Cheque Slip Amount\n(Bill amount <= Cheque Slip Amount)");
+    return null;
+  }
 
-  // SAVE BILL
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // 🔥 CUSTOM MESSAGE 2 (YOUR REQUIRED ONE)
+  if (message.includes("BILLNO")) {
+    alert("BILLNO + BILLDATE COMBINATION SHOULD NOT REPEAT");
+    return null;
+  }
 
-    if (!validateForm()) return;
+  // 🔥 DEFAULT (IMPORTANT)
+  alert(message);
+  return null;
+}
 
-    try {
-      const message = await saveBillToBackend();
-      if (!message) return;
+  return message;
+};
 
-      alert("Bill Saved Successfully\nRVNO: " + message);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      setFormData((prev) => ({
-        ...prev,
-        type: "",
-        purpose: "",
-        billNo: "",
-        billDate: "",
-        billAmount: "",
-      }));
+  if (!validateForm()) return;
 
-      navigate("/pcdabillpage");
-    } catch (error) {
-      alert("Server error. Please try again.");
-    }
-  };
+  try {
+    const message = await saveBillToBackend();
+    if (!message) return;
 
-  // ADD RECEIPT
-  const handleAddReceipt = async () => {
-    if (!validateForm()) return;
+    alert("Bill Saved Successfully\nRVNO: " + message);
 
-    try {
-      const message = await saveBillToBackend();
-      if (!message) return;
+    setFormData((prev) => ({
+      ...prev,
+      type: "",
+      purpose: "",
+      billNo: "",
+      billDate: "",
+      billAmount: "",
+    }));
 
-      alert("Bill Saved Successfully\nRVNO: " + message);
+    navigate("/PCdaBillpage");
+  } catch (error) {
+    alert("Server error. Please try again.");
+  }
+};
 
-      setFormData((prev) => ({
-        ...prev,
-        type: "",
-        purpose: "",
-        billNo: "",
-        billDate: "",
-        billAmount: "",
-      }));
-
-      navigate("/pcda-receipt");
-
-    } catch (error) {
-      alert("Server error. Please try again.");
-    }
-  };
-
+  const handleAddReceipt = () => {
+  navigate("/cda-receipt");
+};
   return (
     <div className="page-bg">
       <div className="form-card">
@@ -185,47 +172,65 @@ export default function Bills() {
         </div>
 
         <h2 className="main-title">PUBLIC FUND</h2>
-        <h4 className="sub-title">BILL FROM PCDA</h4>
 
         <form onSubmit={handleSubmit}>
 
-          <div className="row">
-            <div className="col">
-              <label>REC NO</label>
-              <input type="text" value={formData.recNo} readOnly />
+          <div className="receipt-box">
+            <h3 className="receipt-title">Receipt Details</h3>
+
+            <div className="row">
+              <div className="col">
+                <div className="inline-field">
+                  <span className="label">REC NO :</span>
+                  <span className="value">{formData.recNo}</span>
+                </div>
+              </div>
+
+              <div className="col">
+                <div className="inline-field">
+                  <span className="label">PCDA DVNO :</span>
+                  <span className="value">{formData.dvno}</span>
+                </div>
+              </div>
+
+              <div className="col">
+                <div className="inline-field">
+                  <span className="label">PCDA CHEQUE NO :</span>
+                  <span className="value">{formData.chequeNo}</span>
+                </div>
+              </div>
             </div>
 
-            <div className="col">
-              <label>PCDA DVNO</label>
-              <input type="text" value={formData.dvno} readOnly />
-            </div>
+            <div className="row">
+              <div className="col">
+                <div className="inline-field">
+                  <span className="label">PCDA CHEQUE DATE :</span>
+                  <span className="value">{formData.chequeDate}</span>
+                </div>
+              </div>
 
-            <div className="col">
-              <label>PCDA CHEQUE NO</label>
-              <input type="text" value={formData.chequeNo} readOnly />
+              <div className="col">
+                <div className="inline-field">
+                  <span className="label">BANK CREDIT DATE :</span>
+                  <span className="value">{formData.bankCreditDate}</span>
+                </div>
+              </div>
+              <div className="col">
+                <div className="inline-field">
+                  <span className="label">CHEQUE SLIP TOTAL AMOUNT :</span>
+                  <span className="value">{formData.chequeTotal}</span>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          <div className="row">
-            <div className="col">
-              <label>PCDA CHEQUE DATE</label>
-              <input type="date" value={formData.chequeDate} readOnly />
-            </div>
-
-            <div className="col">
-              <label>CHEQUE SLIP TOTAL AMOUNT</label>
-              <input type="text" value={formData.chequeTotal} readOnly />
-            </div>
-
-            <div className="col">
-              <label>BANK CREDIT DATE</label>
-              <input type="date" value={formData.bankCreditDate || ""} readOnly />
-            </div>
-          </div>
-
+          <h3 className="bill-title">Bill Details</h3>
           <div className="row-gap"></div>
 
-          <div className="row">
+          {/* ✅ MERGED INTO SINGLE ROW */}
+          <div className="row bill-row">
+
             <div className="col">
               <label>TYPE</label>
               <select name="type" value={formData.type} onChange={handleChange}>
@@ -265,20 +270,19 @@ export default function Bills() {
                 maxLength={10}
               />
             </div>
-          </div>
 
-          <div className="row">
-            <div className="col">
+            <div className="col small-col">
               <label>BILL DATE</label>
               <input
                 type="date"
+                min={new Date().toISOString().split("T")[0]}
                 name="billDate"
                 value={formData.billDate}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="col">
+            <div className="col small-col">
               <label>BILL AMOUNT</label>
               <input
                 type="text"
@@ -287,6 +291,7 @@ export default function Bills() {
                 onChange={handleChange}
               />
             </div>
+
           </div>
 
           <div className="save-container">

@@ -126,6 +126,7 @@ export default function CDAReceipt() {
         <label style={styles.label}>CDA CHEQUE DATE :</label>
         <input
           type="date"
+          min={new Date().toISOString().split("T")[0]}
           style={styles.input}
           value={chequeDate}
           onChange={(e) => setChequeDate(e.target.value)}
@@ -151,6 +152,8 @@ export default function CDAReceipt() {
         <label style={styles.label}>BANK CREDIT DATE :</label>
         <input
           type="date"
+          min={chequeDate} // CDA cheque date
+          max={new Date().toISOString().split("T")[0]} // today
           style={styles.input}
           value={creditDate}
           onChange={(e) => setCreditDate(e.target.value)}

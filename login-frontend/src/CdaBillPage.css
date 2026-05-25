@@ -1,101 +1,225 @@
-.cash-page {
-    min-height: 100vh;
-    background-color: #dfeaf5;
-    padding: 5px;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+body {
+  background-color: #e6f2ff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;   /* increased by 1 */}
+
+/* Full Screen Container */
+
+  .container {
+  position: relative;
+  width: 98%;
+  margin: 10px auto;
+  background: #f7fbff;
+  padding: 15px 18px;
+  border-radius: 6px;
+  border: 1px solid #b7d3f2;
 }
 
-.main-title {
-    text-align: center;
-    color: #0066ff;
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 5px;
-    margin-bottom: 2px;
+.title {
+  text-align: center;
+  color: #1f4e8c;
 }
 
-.sub-title {
-    text-align: center;
-    color: #0066ff;
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 0px;
-    margin-bottom: 15px;
+.subtitle {
+  text-align: center;
+  color: #2c6ed5;
+  margin-bottom: 10px;
 }
 
-.cash-container {
-    width: 82%;
-    background: #f7f7f7;
-
-    margin: auto;
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 18px;
-
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+/* Top Rows - 6 columns */
+.top-rows {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
+/* Middle Rows */
+.middle-rows {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  margin-top: 10px;
 }
 
-.form-group label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #003c99;
-    margin-bottom: 5px;
+label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f4e8c;
 }
 
-.form-group input,
-.form-group textarea {
-    padding: 10px;
-    border-radius: 6px;
-    border: 1.5px solid #8dbfff;
-    font-size: 14px;
-    outline: none;
-    background-color: white;
-    width: 100%;
-    box-sizing: border-box;
+.small-input {
+  width: 100%;
+  padding: 4px;
+  font-size: 13px;
+  border: 1px solid #b7cde5;
+  border-radius: 4px;
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 65px;
+/* Table */
+.bill-table {
+  width: 75%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  margin-bottom: 40px; /* Space below table */
+}
+
+.bill-table th {
+  background-color: #cfe4ff;
+  border: 1px solid #9ec5f8;
+  padding: 4px;
+  font-size: 13px;
+  color: #1f4e8c;
+}
+
+.bill-table td {
+  border: 1px solid #b7cde5;
+  padding: 3px;
+}
+
+.table-input {
+  width: 100%;
+  padding: 3px;
+  border: 1px solid #b7cde5;
+  border-radius: 3px;
+}
+
+/* Tax Row */
+.epic-tax-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.epic-small {
+  width: 60px;
+  padding: 3px;
+  border: 1px solid #b7cde5;
+  border-radius: 3px;
+}
+
+.epic-medium {
+  width: 90px;
+  padding: 3px;
+  border: 1px solid #b7cde5;
+  border-radius: 3px;
+}
+
+/* Save Button */
+.save-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+    margin-top: -2px;
 }
 
 .save-btn {
-    width: 90px;
-    height: 32px;
-
-    margin: 15px auto;
-
-    background-color: #0066ff;
-    color: white;
-
-    border: none;
-    border-radius: 5px;
-
-    font-size: 14px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 0;
+  width: 120px;
+  height: 34px;
+  font-size: 13px;
+  background-color: #2c6ed5;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.save-btn:hover {
-    background-color: #0052cc;
+/* Bottom Boxes */
+.bottom-section {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.box {
+  flex: 1;
+  height: 90px;
+  border: 1px solid #9ec5f8;
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 13px;
+  overflow-y: scroll;   /* always show vertical scrollbar */
+  overflow-x: auto;
+}
+
+.center-btn {
+  text-align: center;
+  margin-top: 6px;
+}
+
+.left-btn {
+  margin-top: 4px;
+}
+
+.small-btn {
+  padding: 4px 10px;
+  font-size: 13px;
+  background-color: #cfe4ff;
+  border: 1px solid #9ec5f8;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.receipt-box {
+  border: 2px solid black;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow-x: auto; /* prevents breaking */
+}
+
+.receipt-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between; /* spreads items FULL WIDTH */
+  align-items: center;
+  width: 100%;
+}
+
+.receipt-item {
+  display: flex;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.label {
+  color: red;
+  font-weight: bold;
+}
+
+.value {
+  color: black;
+}
+.receipt-box {
+  border: 2px solid black;
+  padding: 15px 20px;   /* equal vertical spacing */
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.receipt-title {
+  text-align: center;
+  font-weight: bold;
+  margin: 0 0 15px 0;   /* SAME as top spacing */
+}
+.bill-label {
+  color: rgb(50, 165, 42);
+  font-weight: bold;
+}
+/* Bill Details labels only */
+.receipt-box:nth-of-type(2) .label {
+  color: rgb(42, 165, 52);
+}
+.add-persons-title {
+  text-align: center;
+  font-weight: bold;
+  margin: 15px 0;
 }

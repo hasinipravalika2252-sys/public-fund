@@ -1,37 +1,38 @@
 .cash-page {
     min-height: 100vh;
-    background-color: #dfeaf5;
-    padding: 30px;
+    background-color: #e3f2fd;
+    padding-top: 20px;
     font-family: Arial, sans-serif;
 }
 
 .main-title {
     text-align: center;
-    color: #0066ff;
-    font-size: 60px;
+    color: #1565c0;
+    font-size: 34px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin: 0;
 }
 
 .sub-title {
     text-align: center;
-    color: #0066ff;
-    font-size: 40px;
-    margin-bottom: 40px;
+    color: #1565c0;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 20px;
 }
 
 .cash-container {
-    width: 85%;
-    background: white;
+    width: 760px;
     margin: auto;
-
+    background-color: white;
+    border-radius: 12px;
     padding: 40px;
-    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-
-    gap: 30px;
+    gap: 28px;
 }
 
 .form-group {
@@ -40,47 +41,46 @@
 }
 
 .form-group label {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    color: #003c99;
-    margin-bottom: 12px;
+    color: #1565c0;
+    margin-bottom: 8px;
 }
 
 .form-group input,
 .form-group textarea {
-    padding: 16px;
-    border-radius: 10px;
-    border: 2px solid #8dbfff;
-    font-size: 18px;
+    width: 180px;
+    height: 34px;
+    border: 1px solid black;
+    padding-left: 8px;
+    font-size: 15px;
+    background-color: white;
+    border-radius: 0;
     outline: none;
 }
 
 .form-group textarea {
-    resize: vertical;
+    min-height: 40px;
+    resize: none;
+    padding-top: 8px;
 }
 
 .save-btn {
-  width: 210px;
-  height: 46px;
+    background-color: white;
+    border: 1px solid black;
+    padding: 8px 30px;
+    font-size: 18px;
+    cursor: pointer;
 
-  background-color: #0d6efd;
-  color: white;
+    width: auto;
+    height: auto;
 
-  border: none;
-  border-radius: 14px;
-
-  font-size: 22px;
-  font-weight: bold;
-
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin: 35px auto;
+    display: block;
+    margin: 40px auto 0;
+    color: black;
+    border-radius: 0;
 }
 
 .save-btn:hover {
-    background: #0051cc;
+    background-color: #f2f2f2;
 }

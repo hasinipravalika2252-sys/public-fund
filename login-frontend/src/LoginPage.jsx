@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { AppContext } from "./context/AppContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -15,48 +13,36 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setTrDate } = useContext(AppContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-try {
-  const response = await fetch("http://localhost:8080/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username,
-      password
-    }),
-  });
+    try {
+      const response = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password
+        }),
+      });
 
-  const message = await response.text();
+      const message = await response.text();
 
-  if (message === "Login successful") {
-
-    alert("Login successful");
-
-    const loginDate = today;
-
-    console.log("SETTING DATE:", loginDate);
-
-    setTrDate(loginDate);
-
-    setTimeout(() => {
-      navigate("/receipts");
-    }, 0);
-
-  } else {
-    setError(message);
-  }
-
-} catch (err) {
-  setError("Server error. Please try again.");
-}
+      if (message === "Login successful") {
+        alert("Login successful");
+        navigate("/receipts");
+      } else {
+        setError(message);
+      }
+    } catch (err) {
+      setError("Server error. Please try again.");
+    }
   };
+
   return (
     <div style={styles.page}>
       <h1 style={styles.title}>Login page</h1>

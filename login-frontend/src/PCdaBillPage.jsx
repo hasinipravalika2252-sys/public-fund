@@ -3,10 +3,10 @@ import "./CdaBillPage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const PCdaBillPage = () => {
+const CdaBillPage = () => {
   const navigate = useNavigate();
 
-  const [typeValue, setTaxValue] = useState("Nill");
+  const [typeValue, setTaxValue] = useState("Nil");
 
   const [receiptData, setReceiptData] = useState({});
 
@@ -38,6 +38,10 @@ const PCdaBillPage = () => {
   const [savedRecords, setSavedRecords] = useState([]);
 
   const [rowLocked, setRowLocked] = useState(false);
+  const [hasBillError, setHasBillError] = useState(false);
+  const [drdlSearch, setDrdlSearch] = useState("");
+const [otherSearch, setOtherSearch] = useState("");
+  
 
   const handlePersonClick = (person) => {
     setSelectedPerson({
@@ -67,7 +71,7 @@ const PCdaBillPage = () => {
   };
 
   useEffect(() => {
-    if (typeValue !== "Nill" && baseAmount !== "") {
+    if (typeValue !== "Nil" && baseAmount !== "") {
 
       const base = parseFloat(baseAmount);
       const percent = parseFloat(typeValue);
@@ -103,8 +107,26 @@ const PCdaBillPage = () => {
         setReceiptData(data);
       })
       .catch((error) => {
-        console.error("Error fetching latest receipt:", error);
-      });
+
+  console.log("FULL ERROR:", error);
+
+  if (error.response) {
+    if (error.response.data) {
+      alert(error.response.data); // ✅ backend message
+    } else if (error.response.status === 400) {
+      alert("Bad Request");
+    } else if (error.response.status === 500) {
+      alert("Server Error");
+    } else {
+      alert("Unexpected Error");
+    }
+  } else if (error.request) {
+    alert("No response from server");
+  } else {
+    alert("Error: " + error.message);
+  }
+
+});
   }, []);
 
   useEffect(() => {
@@ -167,7 +189,7 @@ const PCdaBillPage = () => {
       persno: selectedPerson.persno,
       amount: amount,
       cashbookAmount: cashbookAmount,
-      taxflag: typeValue === "Nill" ? 0 : Number(typeValue),
+      taxflag: typeValue === "Nil" ? 0 : Number(typeValue),
       alertflag: "N"
     };
 
@@ -182,6 +204,7 @@ const PCdaBillPage = () => {
       .then((response) => {
 
         alert(response.data);
+        
 
         if (response.data && response.data.toLowerCase().includes("success")) {
 
@@ -191,15 +214,8 @@ const PCdaBillPage = () => {
             amount: amount
           };
 
-          setSavedRecords((prev) => [newRecord, ...prev]);
-
-        }
-
-        if (response.data && response.data.toLowerCase().includes("all payment")) {
-          setRowLocked(true);
-        }
-
-        setAmount("");
+         setSavedRecords((prev) => [...prev, newRecord]);
+          setAmount("");
         setCashbookAmount("");
         setBaseAmount("");
         setTdsAmount("");
@@ -211,12 +227,39 @@ const PCdaBillPage = () => {
           name: ""
         });
 
+        }
+
+      if (response.data && response.data.toLowerCase().includes("all payment")) {
+  setRowLocked(true);
+  setHasBillError(true);
+}
+       
+
       })
-      .catch((error) => {
+   .catch((error) => {
 
-        alert(error.response?.data || "Error saving details");
+  console.log("FULL ERROR:", error);
 
-      });
+  if (error.response) {
+
+    const msg =
+      typeof error.response.data === "string"
+        ? error.response.data
+        : error.response.data?.message;
+
+    if (msg) {
+      alert(msg); // ✅ always correct message
+    } else {
+      alert("Server error occurred");
+    }
+
+  } else if (error.request) {
+    alert("No response from server");
+  } else {
+    alert("Error: " + error.message);
+  }
+
+});
   };
 
   return (
@@ -229,66 +272,88 @@ const PCdaBillPage = () => {
     </div>
 
     <h2 className="title">PUBLIC FUND</h2>
-    <h3 className="subtitle">BILL FROM PCDA</h3>
+   
     
 
-      <div className="top-rows">
+      <div className="receipt-box">
 
-        <div>
-          <label>REC No</label>
-          <input className="small-input" value={receiptData.recNo || ""} readOnly />
-        </div>
+  <h3 className="receipt-title">Receipt Details</h3>
 
-        <div>
-          <label>PCDA DVNO</label>
-          <input className="small-input" value={receiptData.dvnoRefno || ""} readOnly />
-        </div>
+  <div className="receipt-row">
 
-        <div>
-          <label>PCDA CHEQUE No</label>
-          <input className="small-input" value={receiptData.chequeReceiptNo || ""} readOnly />
-        </div>
+    <div className="receipt-item">
+      <span className="label">REC NO :</span>
+      <span className="value">{receiptData.recNo || ""}</span>
+    </div>
 
-        <div>
-          <label>PCDA CHEQUE DATE</label>
-          <input type="date" className="small-input" value={receiptData.chequeReceiptDate || ""} readOnly />
-        </div>
+    <div className="receipt-item">
+      <span className="label">PCDA DVNO :</span>
+      <span className="value">{receiptData.dvnoRefno || ""}</span>
+    </div>
 
-        <div>
-          <label>PCDA CHEQUE SLIP TOTAL AMOUNT</label>
-          <input type="number" className="small-input" value={receiptData.amount || ""} readOnly />
-        </div>
+    <div className="receipt-item">
+      <span className="label">PCDA CHEQUE NO :</span>
+      <span className="value">{receiptData.chequeReceiptNo || ""}</span>
+    </div>
 
-        <div>
-          <label>BANK CREDIT DATE</label>
-          <input type="date" className="small-input" value={receiptData.bankCreditDate || ""} readOnly />
-        </div>
+    <div className="receipt-item">
+      <span className="label">PCDA CHEQUE DATE :</span>
+      <span className="value">{receiptData.chequeReceiptDate || ""}</span>
+    </div>
 
-      </div>
+    <div className="receipt-item">
+  <span className="label">BANK CREDIT DATE :</span>
+  <span className="value">{receiptData.bankCreditDate || ""}</span>
+</div>
 
-      <table className="bill-table">
-        <thead>
-          <tr>
-            <th>RVNO</th>
-            <th>Bill No</th>
-            <th>Bill Date</th>
-            <th>Bill Amount</th>
-            <th>Tax</th>
-            <th>Purpose</th>
-          </tr>
-        </thead>
+<div className="receipt-item">
+  <span className="label">CHEQUE SLIP TOTAL AMOUNT :</span>
+  <span className="value">{receiptData.amount || ""}</span>
+</div>
 
-        <tbody>
-          <tr>
-            <td><input className="table-input" name="rvno" value={bill.rvno} onChange={handleChange} /></td>
-            <td><input className="table-input" name="billNo" value={bill.billNo} onChange={handleChange} /></td>
-            <td><input type="date" className="table-input" name="billDate" value={bill.billDate} onChange={handleChange} /></td>
-            <td><input type="number" className="table-input" name="billAmount" value={bill.billAmount} onChange={handleChange} /></td>
-            <td><input className="table-input" name="type" value={bill.type} onChange={handleChange} /></td>
-            <td><input className="table-input" name="purpose" value={bill.purpose} onChange={handleChange} /></td>
-          </tr>
-        </tbody>
-      </table>
+  </div>
+
+</div>
+
+      <div className="receipt-box">
+
+  <h3 className="receipt-title">Bill Details</h3>
+
+  <div className="receipt-row">
+
+    <div className="receipt-item">
+      <span className="label">RVNO :</span>
+      <span className="value">{bill.rvno}</span>
+    </div>
+
+    <div className="receipt-item">
+      <span className="label">BILL NO :</span>
+      <span className="value">{bill.billNo}</span>
+    </div>
+
+    <div className="receipt-item">
+      <span className="label">BILL DATE :</span>
+      <span className="value">{bill.billDate}</span>
+    </div>
+    
+    <div className="receipt-item">
+      <span className="label">TAX % :</span>
+      <span className="value">{bill.type}</span>
+    </div>
+
+    <div className="receipt-item">
+      <span className="label">PURPOSE :</span>
+      <span className="value">{bill.purpose}</span>
+    </div>
+    <div className="receipt-item">
+      <span className="label">BILL AMOUNT :</span>
+      <span className="value">{bill.billAmount}</span>
+    </div>
+
+  </div>
+
+</div>
+<h3 className="add-persons-title">Add Persons</h3>
 
       {savedRecords.length > 0 && (
         <div style={{marginBottom:"20px"}}>
@@ -350,14 +415,14 @@ const PCdaBillPage = () => {
         </div>
 
         <div>
-          <label>Tax</label>
+          <label>Tax Percentage</label>
           <select
             className="small-input"
             value={typeValue}
             onChange={(e) => setTaxValue(e.target.value)}
             disabled={rowLocked}
           >
-            <option>Nill</option>
+            <option>Nil</option>
             <option>2</option>
             <option>10</option>
           </select>
@@ -365,7 +430,7 @@ const PCdaBillPage = () => {
 
       </div>
 
-      {typeValue !== "Nill" && (
+      {typeValue !== "Nil" && (
         <div className="epic-tax-row">
 
           <label>CGST</label>
@@ -387,51 +452,116 @@ const PCdaBillPage = () => {
 
         </div>
       )}
-
       <div className="save-container">
-        <button className="save-btn" onClick={handleSave} disabled={rowLocked}>SAVE</button>
+        <button
+          className="save-btn"
+          onClick={handleSave}
+          disabled={rowLocked}
+        >
+          SAVE
+        </button>
       </div>
+<div className="bottom-section">
 
-      <div className="bottom-section">
+  {/* DRDL BOX */}
+  <div className="box">
 
-        <div className="box">
-          <strong>DRDO Employee Details</strong>
+    <strong>DRDL Employee Details</strong>
 
-          {drdlPersonnel.map((p) => (
-            <div
-              key={p.persno}
-              onClick={() => !rowLocked && handlePersonClick(p)}
-              style={{ cursor: "pointer" }}
-            >
-              {p.persno} - {p.name} - {p.idno}
-            </div>
-          ))}
+    <input
+      type="text"
+      placeholder="Search by ID / PER NO / Name"
+      value={drdlSearch}
+      onChange={(e) => setDrdlSearch(e.target.value)}
+      className="small-input"
+      style={{
+        width: "95%",
+        marginTop: "10px",
+        marginBottom: "10px"
+      }}
+    />
 
+    {drdlPersonnel
+      .filter((p) =>
+        p.name?.toLowerCase().includes(drdlSearch.toLowerCase()) ||
+        p.idno?.toString().includes(drdlSearch) ||
+        p.persno?.toString().includes(drdlSearch)
+      )
+      .map((p) => (
+
+        <div
+          key={p.persno}
+          onClick={() => handlePersonClick(p)}
+          style={{ cursor: "pointer" }}
+        >
+          {p.persno} - {p.name} - {p.idno}
         </div>
 
-        <div className="box">
-          <strong>Other Persons Details</strong>
+      ))}
 
-          {otherPersonnel.map((p) => (
-            <div
-              key={p.persno}
-              onClick={() => !rowLocked && handlePersonClick(p)}
-              style={{ cursor: "pointer" }}
-            >
-              {p.persno} - {p.name} - {p.idno}
-            </div>
-          ))}
+  </div>
 
+  {/* OTHER BOX */}
+  <div className="box">
+
+    <strong>Other Persons Details</strong>
+
+    <input
+      type="text"
+      placeholder="Search by ID / PER NO / Name"
+      value={otherSearch}
+      onChange={(e) => setOtherSearch(e.target.value)}
+      className="small-input"
+      style={{
+        width: "95%",
+        marginTop: "10px",
+        marginBottom: "10px"
+      }}
+    />
+
+    {otherPersonnel
+      .filter((p) =>
+        p.name?.toLowerCase().includes(otherSearch.toLowerCase()) ||
+        p.idno?.toString().includes(otherSearch) ||
+        p.persno?.toString().includes(otherSearch)
+      )
+      .map((p) => (
+
+        <div
+          key={p.persno}
+          onClick={() => handlePersonClick(p)}
+          style={{ cursor: "pointer" }}
+        >
+          {p.persno} - {p.name} - {p.idno}
         </div>
 
-      </div>
+      ))}
+
+  </div>
+
+</div>
 
       <div className="center-btn">
-        <button className="small-btn" onClick={() => navigate("/pcdabills")}> Add Another Bill</button>
+        <button
+  className="small-btn"
+  style={{
+    backgroundColor: hasBillError ? "grey" : "",
+    cursor: hasBillError ? "not-allowed" : "pointer"
+  }}
+  onClick={() => {
+    if (hasBillError) {
+      alert("All payments completed. Cannot add another bill.");
+      return;
+    }
+    navigate("/bills");
+  }}
+>
+  Add Another Bill
+</button>
       </div>
 
       <div className="left-btn">
-        <button className="small-btn" onClick={() => navigate("/pcda-receipt")}>
+        <button className="small-btn" onClick={() => navigate("/cda-receipt")}>
           Add another Receipt
         </button>
       </div>
@@ -440,4 +570,4 @@ const PCdaBillPage = () => {
   );
 };
 
-export default PCdaBillPage;
+export default CdaBillPage;

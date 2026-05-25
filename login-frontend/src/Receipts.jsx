@@ -1,44 +1,70 @@
 import { useNavigate } from "react-router-dom";
 
 export default function Receipts() {
+
   const navigate = useNavigate();
 
   return (
+
     <div style={styles.page}>
+
       {/* Sign Out */}
-      <div style={styles.signout} onClick={() => navigate("/")}>
+      <div
+        style={styles.signout}
+        onClick={() => navigate("/")}
+      >
         Sign Out
       </div>
 
       <h1 style={styles.title}>RECEIPTS</h1>
 
       <div style={styles.box}>
+
         <p
           style={styles.link}
           onClick={() => navigate("/cda-receipt")}
-
         >
           From CDA, Hyderabad
         </p>
 
-        <p style={styles.link}
-        onClick={() => navigate("/pcda-receipt")}
-        >From PCDA, DELHI</p>
-       <p
-  style={styles.link}
-  onClick={() => navigate("/cash")}
->
-  Cash
-</p>
-        <p style={styles.link}>Withdrawal</p>
-        <p style={styles.link}>Cheque / DD</p>
-        <p style={styles.link}>Direct From SBI</p>
+        <p
+          style={styles.link}
+          onClick={() => navigate("/pcda-receipt")}
+        >
+          From PCDA, DELHI
+        </p>
+
+        <p
+          style={styles.link}
+          onClick={() => navigate("/cash")}
+        >
+          Cash
+        </p>
+
+        <p
+          style={styles.link}
+          onClick={() => navigate("/cheque-dd-receipt")}
+        >
+          Withdrawal
+        </p>
+
+        <p style={styles.link}>
+          Cheque / DD
+        </p>
+
+        <p style={styles.link}>
+          Direct From SBI
+        </p>
+
       </div>
+
     </div>
+
   );
 }
 
 const styles = {
+
   page: {
     backgroundColor: "#e3f2fd",
     minHeight: "100vh",
@@ -49,6 +75,7 @@ const styles = {
     fontFamily: "Arial",
     position: "relative",
   },
+
   signout: {
     position: "absolute",
     right: "30px",
@@ -60,12 +87,14 @@ const styles = {
     fontSize: "16px",
     fontWeight: "bold",
   },
+
   title: {
     color: "#1565c0",
     marginBottom: "20px",
     fontSize: "32px",
     fontWeight: "bold",
   },
+
   box: {
     border: "2px solid black",
     padding: "20px",
@@ -75,9 +104,11 @@ const styles = {
     flexDirection: "column",
     gap: "12px",
   },
+
   link: {
     fontSize: "18px",
     textDecoration: "underline",
     cursor: "pointer",
   },
+
 };

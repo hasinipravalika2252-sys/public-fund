@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function PCDAReceipt() {
+export default function CDAReceipt() {
   const navigate = useNavigate();
 
   const now = new Date();
@@ -56,7 +56,7 @@ export default function PCDAReceipt() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/receipts/pcda",
+        "http://localhost:8080/api/receipts/cda",
         {
           method: "POST",
           headers: {
@@ -72,7 +72,7 @@ export default function PCDAReceipt() {
       }
 
       alert("Receipt saved successfully ");
-      navigate("/pcdabills");
+      navigate("/PCDABills");
 
     } catch (error) {
       console.error(error);
@@ -126,6 +126,7 @@ export default function PCDAReceipt() {
         <label style={styles.label}>PCDA CHEQUE DATE :</label>
         <input
           type="date"
+          min={new Date().toISOString().split("T")[0]}
           style={styles.input}
           value={chequeDate}
           onChange={(e) => setChequeDate(e.target.value)}
@@ -151,6 +152,8 @@ export default function PCDAReceipt() {
         <label style={styles.label}>BANK CREDIT DATE :</label>
         <input
           type="date"
+          min={chequeDate} // PCDA cheque date
+          max={new Date().toISOString().split("T")[0]} // today
           style={styles.input}
           value={creditDate}
           onChange={(e) => setCreditDate(e.target.value)}
